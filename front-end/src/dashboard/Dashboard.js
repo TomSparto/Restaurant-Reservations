@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
+import Reservations from "./Reservations";
 
 /**
  * Defines the dashboard page.
@@ -22,16 +23,17 @@ function Dashboard({ date }) {
       .catch(setReservationsError);
     return () => abortController.abort();
   }
-
   return (
-    <main>
-      <h1>Dashboard</h1>
-      <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date</h4>
-      </div>
-      <ErrorAlert error={reservationsError} />
-      {JSON.stringify(reservations)}
-    </main>
+    reservations.length > 0 && (
+      <main>
+        <h1>Dashboard</h1>
+        <div className="d-md-flex mb-3">
+          <h4 className="mb-0">Reservations for date</h4>
+        </div>
+        <ErrorAlert error={reservationsError} />
+        <Reservations reservations={reservations} />
+      </main>
+    )
   );
 }
 
