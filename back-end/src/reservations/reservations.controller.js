@@ -1,9 +1,7 @@
 const knex = require("../db/connection");
 const service = require("./reservations.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
-/**
- * List handler for reservation resources
- */
+
 const VALID = [
   "first_name",
   "last_name",
@@ -65,6 +63,13 @@ function validateProperties(req, res, next) {
 
 function validateDate(req, res, next) {
   const { reservation_date } = res.locals.data;
+  if (!isfutureDate(reservation_date)) {
+    next({
+      status: 400,
+      message: "reservation_date must be in the future",
+    });
+  }
+
   if (!/^\d{4}\-\d{2}\-\d{2}$/.test(reservation_date)) {
     next({
       status: 400,
@@ -73,6 +78,27 @@ function validateDate(req, res, next) {
   }
 
   next();
+}
+
+function isfutureDate(reservation_date) {
+  const today = new Date();
+  const reservation = new Date(reservation_date);
+
+  if (reservation.getFullYear() > today.getFullYear()) {
+    return true;
+  } else if (reservation.getFullYear() == today.getFullYear()) {
+    if (reservation.getMonth() > today.getMonth()) {
+      return true;
+    } else if (reservation.getMonth() == today.getMonth()) {
+      if (reservation.getDate() >= today.getDate()) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  } else {
+    return false;
+  }
 }
 
 function validateTime(req, res, next) {
