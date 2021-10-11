@@ -33,7 +33,6 @@ function Form({ setDate }) {
     }
   };
 
-  console.log(formData);
   return (
     <div>
       <form>
@@ -131,7 +130,7 @@ function Form({ setDate }) {
       <ErrorAlert error={createError} />
       <div className="my-3">
         <button
-          type="button"
+          type="submit"
           className="btn btn-primary mr-3"
           onClick={handleSubmit}
         >

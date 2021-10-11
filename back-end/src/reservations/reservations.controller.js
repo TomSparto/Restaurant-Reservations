@@ -88,10 +88,14 @@ function validateTime(req, res, next) {
 
 function validatePhone(req, res, next) {
   const { mobile_number } = res.locals.data;
-  if (!/^\d{3}\-\d{3}\-\d{4}$/.test(mobile_number)) {
+  if (
+    !/^\d{3}\-\d{4}$/.test(mobile_number) &&
+    !/^\d{3}\-\d{3}\-\d{4}$/.test(mobile_number)
+  ) {
     next({
       status: 400,
-      message: "mobile_number must has a pattern like '123-123-1234'",
+      message:
+        "mobile_number must has a pattern like '123-123-1234' or '123-1234'",
     });
   }
   next();
