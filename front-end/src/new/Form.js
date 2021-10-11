@@ -69,13 +69,14 @@ function Form({ setDate }) {
             <label htmlFor="mobile_number">
               <b>Mobile Number:</b>
             </label>
-            <small className="float-right">Format: 123-456-7890</small>
+            <small className="float-right">
+              Format: 123-456-7890 or 123-4567
+            </small>
             <input
               name="mobile_number"
               id="mobile_number"
               type="tel"
               className="form-control"
-              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
               onChange={handleChange}
               value={formData.mobile_number}
               required
