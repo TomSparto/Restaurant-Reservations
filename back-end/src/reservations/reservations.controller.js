@@ -110,10 +110,24 @@ function isfutureDate(reservation_date) {
 }
 
 function validateTime(req, res, next) {
-  const { reservation_time } = res.locals.data;
+  const { reservation_time, reservation_date } = res.locals.data;
   const today = new Date();
-  const currentTime = `${today.getHours()}:${today.getMinutes()}`;
-  console.log(currentTime);
+  const currentTime = [today.getHours(), today.getMinutes()];
+  if (isToday(reservation_date, today)) {
+    console.log("the reservation is for today");
+    if (!checkHours(reservation_time, currentTime)) {
+      next({
+        status: 400,
+        message: "reservation_time needs to be in the future",
+      });
+    }
+  }
+  if (!checkHours(reservation_time)) {
+    next({
+      status: 400,
+      message: "reservation_time must be between 10:30 and 21:30",
+    });
+  }
   if (!/^\d{2}\:\d{2}/.test(reservation_time)) {
     next({
       status: 400,
@@ -121,6 +135,48 @@ function validateTime(req, res, next) {
     });
   }
   next();
+}
+
+function checkHours(reservation_time, currentTime) {
+  const reservationTime = reservation_time.split(":");
+  if (!currentTime) {
+    if (reservationTime[0] <= 10) {
+      if (reservationTime[0] < 10) {
+        return false;
+      }
+      if (reservationTime[1] < 30) {
+        return false;
+      }
+    }
+    if (reservationTime[0] >= 21) {
+      if (reservationTime[0] > 21) {
+        return false;
+      }
+      if (reservationTime[1] > 30) {
+        return false;
+      }
+    }
+  } else {
+    if (reservationTime[0] <= currentTime[0]) {
+      if (reservationTime[0] < currentTime[0]) {
+        return false;
+      }
+      if (reservationTime[1] < currentTime[1]) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+function isToday(reservation_date, today) {
+  const currentDate = `${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
+  if (reservation_date === currentDate) {
+    return true;
+  } else return false;
 }
 
 function validatePhone(req, res, next) {
