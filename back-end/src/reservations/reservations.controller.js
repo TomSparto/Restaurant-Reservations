@@ -63,13 +63,22 @@ function validateProperties(req, res, next) {
 
 function validateDate(req, res, next) {
   const { reservation_date } = res.locals.data;
+  const reservationDate = new Date(reservation_date);
+  const dayOfWeek = reservationDate.getDay();
+  console.log(dayOfWeek);
   if (!isfutureDate(reservation_date)) {
     next({
       status: 400,
       message: "reservation_date must be in the future",
     });
   }
-
+  if (dayOfWeek === 1) {
+    next({
+      status: 400,
+      message:
+        "reservation_date cannot fall on a tuesday because we are closed",
+    });
+  }
   if (!/^\d{4}\-\d{2}\-\d{2}$/.test(reservation_date)) {
     next({
       status: 400,
