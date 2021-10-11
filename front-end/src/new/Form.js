@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { createReservation } from "../utils/api";
+import ErrorAlert from "../layout/ErrorAlert";
 
-function Form() {
+function Form({ setDate }) {
   const history = useHistory();
+
+  const [createError, setCreateError] = useState(null);
   const initialFormState = {
     first_name: "",
     last_name: "",
@@ -20,8 +23,14 @@ function Form() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     formData.people = parseInt(formData.people);
-    await createReservation({ data: formData });
-    setFormData({ ...initialFormState });
+    try {
+      await createReservation({ data: formData });
+      setFormData({ ...initialFormState });
+      setDate(formData.reservation_date);
+      history.push("/dashboard");
+    } catch (error) {
+      setCreateError(error);
+    }
   };
 
   console.log(formData);
@@ -119,6 +128,7 @@ function Form() {
           </div>
         </div>
       </form>
+      <ErrorAlert error={createError} />
       <div className="my-3">
         <button
           type="button"

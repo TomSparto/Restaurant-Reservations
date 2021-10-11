@@ -86,6 +86,17 @@ function validateTime(req, res, next) {
   next();
 }
 
+function validatePhone(req, res, next) {
+  const { mobile_number } = res.locals.data;
+  if (!/^\d{3}\-\d{3}\-\d{4}$/.test(mobile_number)) {
+    next({
+      status: 400,
+      message: "mobile_number must has a pattern like '123-123-1234'",
+    });
+  }
+  next();
+}
+
 function validatePeople(req, res, next) {
   const { people } = res.locals.data;
   if (typeof people !== "number") {
@@ -114,6 +125,7 @@ module.exports = {
   create: [
     validateData,
     validateProperties,
+    validatePhone,
     validateDate,
     validateTime,
     validatePeople,
