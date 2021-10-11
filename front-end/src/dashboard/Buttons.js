@@ -18,17 +18,17 @@ function Buttons({ date, setDate }) {
     <div>
       <button
         type="button"
-        class="btn btn-secondary mr-3"
+        className="btn btn-secondary mr-3"
         onClick={() => previousHandler(date)}
       >
         Previous Day
       </button>
-      <button type="button" class="btn btn-primary" onClick={todayHandler}>
+      <button type="button" className="btn btn-primary" onClick={todayHandler}>
         Today
       </button>
       <button
         type="button"
-        class="btn btn-secondary mx-3"
+        className="btn btn-secondary mx-3"
         onClick={() => nextHandler(date)}
       >
         Next Day

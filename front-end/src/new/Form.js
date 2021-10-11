@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { createReservation } from "../utils/api";
 
 function Form() {
+  const history = useHistory();
   const initialFormState = {
     first_name: "",
     last_name: "",
@@ -13,6 +16,14 @@ function Form() {
   const handleChange = ({ target }) => {
     setFormData({ ...formData, [target.name]: target.value });
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    formData.people = parseInt(formData.people);
+    await createReservation({ data: formData });
+    setFormData({ ...initialFormState });
+  };
+
   console.log(formData);
   return (
     <div>
@@ -99,7 +110,7 @@ function Form() {
             <input
               name="people"
               id="people"
-              type="text"
+              type="number"
               className="form-control"
               onChange={handleChange}
               value={formData.people}
@@ -108,6 +119,22 @@ function Form() {
           </div>
         </div>
       </form>
+      <div className="my-3">
+        <button
+          type="button"
+          className="btn btn-primary mr-3"
+          onClick={handleSubmit}
+        >
+          Submit
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => history.goBack()}
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   );
 }
