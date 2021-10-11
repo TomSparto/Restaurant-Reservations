@@ -65,7 +65,7 @@ function validateDate(req, res, next) {
   const { reservation_date } = res.locals.data;
   const reservationDate = new Date(reservation_date);
   const dayOfWeek = reservationDate.getDay();
-  console.log(dayOfWeek);
+
   if (!isfutureDate(reservation_date)) {
     next({
       status: 400,
@@ -92,14 +92,13 @@ function validateDate(req, res, next) {
 function isfutureDate(reservation_date) {
   const today = new Date();
   const reservation = new Date(reservation_date);
-
   if (reservation.getFullYear() > today.getFullYear()) {
     return true;
   } else if (reservation.getFullYear() == today.getFullYear()) {
     if (reservation.getMonth() > today.getMonth()) {
       return true;
     } else if (reservation.getMonth() == today.getMonth()) {
-      if (reservation.getDate() >= today.getDate()) {
+      if (reservation.getDate() + 1 >= today.getDate()) {
         return true;
       } else {
         return false;
@@ -112,6 +111,9 @@ function isfutureDate(reservation_date) {
 
 function validateTime(req, res, next) {
   const { reservation_time } = res.locals.data;
+  const today = new Date();
+  const currentTime = `${today.getHours()}:${today.getMinutes()}`;
+  console.log(currentTime);
   if (!/^\d{2}\:\d{2}/.test(reservation_time)) {
     next({
       status: 400,
