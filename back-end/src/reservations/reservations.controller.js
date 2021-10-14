@@ -18,7 +18,7 @@ async function list(req, res) {
 async function reservationExists(req, res, next) {
   const { reservation_id } = req.params;
   const reservation = await service.read(reservation_id);
-  if (reservation.length === 0) {
+  if (!reservation) {
     return next({
       status: 404,
       message: `Reservation with id does not exist: ${reservation_id}`,
