@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { createReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 
-function Form({ setDate }) {
+function ReservationForm({ setDate }) {
   const history = useHistory();
 
   const [createError, setCreateError] = useState(null);
@@ -149,4 +149,4 @@ function Form({ setDate }) {
   );
 }
 
-export default Form;
+export default ReservationForm;
