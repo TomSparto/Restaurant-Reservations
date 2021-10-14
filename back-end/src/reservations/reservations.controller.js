@@ -1,4 +1,3 @@
-const knex = require("../db/connection");
 const service = require("./reservations.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
