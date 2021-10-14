@@ -19,4 +19,20 @@ function read(req, res) {
   res.json({ data });
 }
 
-module.exports = { read: [asyncErrorBoundary(tableExists), read] };
+function validateData(req, res, next) {
+  const { data } = req.body;
+  if (!data) {
+    return next({
+      status: 400,
+      message: "Body is missing the data property.",
+    });
+  }
+  res.locals.data = data;
+
+  next();
+}
+
+module.exports = {
+  read: [asyncErrorBoundary(tableExists), read],
+  create: [validateData],
+};
