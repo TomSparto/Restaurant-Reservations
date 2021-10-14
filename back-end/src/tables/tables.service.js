@@ -16,4 +16,12 @@ function list() {
   return knex("tables").select("*").orderBy("table_name");
 }
 
-module.exports = { read, create, list };
+function update(data, table) {
+  const { reservation_id } = data;
+  const { table_id } = table;
+  return knex("tables")
+    .where({ table_id })
+    .update({ reservation_id, status: "Occupied" });
+}
+
+module.exports = { read, create, list, update };
