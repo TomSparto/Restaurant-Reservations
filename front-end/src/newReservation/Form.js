@@ -36,7 +36,7 @@ function Form({ setDate }) {
   return (
     <div>
       <form>
-        <div className="row">
+        <div className="row my-3">
           <div className="col">
             <label htmlFor="first_name">
               <b>First Name:</b>
