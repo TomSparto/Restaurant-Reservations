@@ -1,5 +1,6 @@
 const service = require("./tables.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
+const { json } = require("express");
 
 async function tableExists(req, res, next) {
   const { table_id } = req.params;
@@ -71,6 +72,11 @@ async function create(req, res) {
   res.status(201).json({ data: res.locals.data });
 }
 
+async function list(req, res) {
+  const data = await service.list();
+  res.json({ data });
+}
+
 module.exports = {
   read: [asyncErrorBoundary(tableExists), read],
   create: [
@@ -79,4 +85,5 @@ module.exports = {
     validateCapacity,
     asyncErrorBoundary(create),
   ],
+  list: asyncErrorBoundary(list),
 };

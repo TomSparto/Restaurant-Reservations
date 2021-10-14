@@ -12,4 +12,8 @@ function create(data) {
   });
 }
 
-module.exports = { read, create };
+function list() {
+  return knex("tables").select("*").orderBy("table_name");
+}
+
+module.exports = { read, create, list };
