@@ -32,7 +32,24 @@ function validateData(req, res, next) {
   next();
 }
 
+function validateName(req, res, next) {
+  const { table_name } = res.locals.data;
+  if (!table_name) {
+    return next({
+      status: 400,
+      message: "table_name is missing or empty",
+    });
+  }
+  if (table_name.length < 2) {
+    return next({
+      status: 400,
+      message: "table_name has to be more than one character",
+    });
+  }
+  next();
+}
+
 module.exports = {
   read: [asyncErrorBoundary(tableExists), read],
-  create: [validateData],
+  create: [validateData, validateName],
 };
