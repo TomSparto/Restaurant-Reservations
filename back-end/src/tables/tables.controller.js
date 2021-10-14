@@ -49,7 +49,34 @@ function validateName(req, res, next) {
   next();
 }
 
+function validateCapacity(req, res, next) {
+  const { capacity } = res.locals.data;
+  if (!capacity) {
+    return next({
+      status: 400,
+      message: "capacity is missing or empty and it cannot be zero",
+    });
+  }
+  if (typeof capacity !== "number") {
+    return next({
+      status: 400,
+      message: "capacity has to be a number",
+    });
+  }
+  next();
+}
+
+async function create(req, res) {
+  const data = await service.create(res.locals.data);
+  res.status(201).json({ data: res.locals.data });
+}
+
 module.exports = {
   read: [asyncErrorBoundary(tableExists), read],
-  create: [validateData, validateName],
+  create: [
+    validateData,
+    validateName,
+    validateCapacity,
+    asyncErrorBoundary(create),
+  ],
 };

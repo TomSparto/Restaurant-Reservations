@@ -4,4 +4,12 @@ function read(table_id) {
   return knex("tables").select("*").where({ table_id }).first();
 }
 
-module.exports = { read };
+function create(data) {
+  const { table_name, capacity } = data;
+  return knex("tables").insert({
+    table_name,
+    capacity,
+  });
+}
+
+module.exports = { read, create };
