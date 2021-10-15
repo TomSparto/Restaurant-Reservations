@@ -20,14 +20,17 @@ function create(data) {
     reservation_time,
     people,
   } = data;
-  return knex("reservations").insert({
-    first_name,
-    last_name,
-    mobile_number,
-    reservation_date,
-    reservation_time,
-    people,
-  });
+  return knex("reservations")
+    .insert({
+      first_name,
+      last_name,
+      mobile_number,
+      reservation_date,
+      reservation_time,
+      people,
+    })
+    .returning("*")
+    .then((rows) => rows[0]);
 }
 
 module.exports = { list, read, create };

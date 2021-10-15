@@ -1,11 +1,11 @@
 import React from "react";
 import ReservationForm from "./ReservationForm";
 
-function NewReservation({ setDate }) {
+function NewReservation() {
   return (
     <div>
       <h1>Create a new reservation</h1>
-      <ReservationForm setDate={setDate} />
+      <ReservationForm />
     </div>
   );
 }

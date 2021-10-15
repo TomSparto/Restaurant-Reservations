@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { listReservations } from "../utils/api";
+import { listReservations, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import Reservations from "./Reservations";
 import Buttons from "./Buttons";
+import Tables from "./Tables";
 
 /**
  * Defines the dashboard page.
@@ -10,13 +11,16 @@ import Buttons from "./Buttons";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date, setDate }) {
+function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
+  const [tables, setTables] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
+  const [tablesError, setTablesError] = useState(null);
 
-  useEffect(loadDashboard, [date]);
+  useEffect(loadReservations, [date]);
+  useEffect(loadTables, []);
 
-  function loadDashboard() {
+  function loadReservations() {
     const abortController = new AbortController();
     setReservationsError(null);
     listReservations({ date }, abortController.signal)
@@ -24,19 +28,31 @@ function Dashboard({ date, setDate }) {
       .catch(setReservationsError);
     return () => abortController.abort();
   }
+
+  function loadTables() {
+    const abortController = new AbortController();
+    setTablesError(null);
+    listTables(abortController.signal).then(setTables).catch(setTablesError);
+    return () => abortController.abort();
+  }
+
   return (
     <main>
-      <h1>Dashboard</h1>
+      <h1>Reservations</h1>
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for {date}</h4>
+        <h4 className="mb-0">Date: {date}</h4>
       </div>
-      <Buttons date={date} setDate={setDate} />
+      <Buttons date={date} />
       <ErrorAlert error={reservationsError} />
       {reservations.length > 0 ? (
         <Reservations reservations={reservations} />
       ) : (
         <h3 className="my-3">No reservations for this date.</h3>
       )}
+      <hr></hr>
+      <h1>Tables</h1>
+      <Tables tables={tables} />
+      <ErrorAlert error={tablesError} />
     </main>
   );
 }

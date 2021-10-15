@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { createReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 
-function ReservationForm({ setDate }) {
+function ReservationForm() {
   const history = useHistory();
 
   const [createError, setCreateError] = useState(null);
@@ -24,10 +24,9 @@ function ReservationForm({ setDate }) {
     event.preventDefault();
     formData.people = parseInt(formData.people);
     try {
-      await createReservation({ data: formData });
+      await createReservation(formData);
       setFormData({ ...initialFormState });
-      setDate(formData.reservation_date);
-      history.push("/dashboard");
+      history.push(`/dashboard?date=${formData.reservation_date}`);
     } catch (error) {
       setCreateError(error);
     }

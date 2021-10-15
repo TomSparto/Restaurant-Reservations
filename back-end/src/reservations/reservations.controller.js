@@ -212,7 +212,7 @@ function validatePeople(req, res, next) {
 
 async function create(req, res) {
   const data = await service.create(res.locals.data);
-  res.status(201).json({ data: res.locals.data });
+  res.status(201).json({ data });
 }
 
 module.exports = {

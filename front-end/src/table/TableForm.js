@@ -1,16 +1,33 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { createTable } from "../utils/api";
+import ErrorAlert from "../layout/ErrorAlert";
 
 function TableForm() {
   const history = useHistory();
   const initialFormState = {
     table_name: "",
-    capacity: "",
+    capacity: 0,
   };
+  const [createError, setCreateError] = useState(null);
   const [formData, setFormData] = useState({ ...initialFormState });
+
   const handleChange = ({ target }) => {
     setFormData({ ...formData, [target.name]: target.value });
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    formData.capacity = parseInt(formData.capacity);
+    try {
+      await createTable({ data: formData });
+      setFormData({ ...initialFormState });
+      history.push("/dashboard");
+    } catch (error) {
+      setCreateError(error);
+    }
+  };
+
   return (
     <div>
       <form>
@@ -45,8 +62,13 @@ function TableForm() {
           </div>
         </div>
       </form>
+      <ErrorAlert error={createError} />
       <div className="my-3">
-        <button type="submit" className="btn btn-primary mr-3">
+        <button
+          type="submit"
+          className="btn btn-primary mr-3"
+          onClick={handleSubmit}
+        >
           Submit
         </button>
         <button

@@ -1,38 +1,25 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { previous, next, today } from "../utils/date-time";
 
-function Buttons({ date, setDate }) {
-  const todayHandler = () => {
-    setDate(today());
-  };
-
-  const nextHandler = (date) => {
-    setDate(next(date));
-  };
-
-  const previousHandler = (date) => {
-    setDate(previous(date));
-  };
-
+function Buttons({ date }) {
   return (
     <div>
-      <button
-        type="button"
-        className="btn btn-secondary mr-3"
-        onClick={() => previousHandler(date)}
-      >
-        Previous Day
-      </button>
-      <button type="button" className="btn btn-primary" onClick={todayHandler}>
-        Today
-      </button>
-      <button
-        type="button"
-        className="btn btn-secondary mx-3"
-        onClick={() => nextHandler(date)}
-      >
-        Next Day
-      </button>
+      <Link to={`/dashboard?date=${previous(date)}`}>
+        <button type="button" className="btn btn-secondary mr-3">
+          Previous Day
+        </button>
+      </Link>
+      <Link to={`/dashboard?date=${today()}`}>
+        <button type="button" className="btn btn-primary">
+          Today
+        </button>
+      </Link>
+      <Link to={`/dashboard?date=${next(date)}`}>
+        <button type="button" className="btn btn-secondary mx-3">
+          Next Day
+        </button>
+      </Link>
     </div>
   );
 }
