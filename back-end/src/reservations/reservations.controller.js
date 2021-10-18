@@ -215,6 +215,17 @@ async function create(req, res) {
   res.status(201).json({ data });
 }
 
+function validateStatus(req, res, next) {
+  const { status } = res.locals.data;
+  if (status && status !== "booked") {
+    return next({
+      status: 400,
+      message: "status cannot be seated or finished.",
+    });
+  }
+  next();
+}
+
 module.exports = {
   list: asyncErrorBoundary(list),
   read: [asyncErrorBoundary(reservationExists), read],
@@ -225,6 +236,7 @@ module.exports = {
     validateDate,
     validateTime,
     validatePeople,
+    validateStatus,
     asyncErrorBoundary(create),
   ],
 };
