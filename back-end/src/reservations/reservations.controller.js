@@ -226,6 +226,29 @@ function validateStatus(req, res, next) {
   next();
 }
 
+function validStatus(req, res, next) {
+  const validStatuses = ["booked", "seated", "finished"];
+  const { status } = req.body.data;
+  if (!validStatuses.includes(status)) {
+    return next({
+      status: 400,
+      message: "status is unknown",
+    });
+  }
+  if (res.locals.reservation.status === "finished") {
+    return next({
+      status: 400,
+      message: "A finished reservation cannot be updated",
+    });
+  }
+  next();
+}
+
+async function update(req, res) {
+  const data = await service.update(req.body.data, res.locals.reservation);
+  res.json({ data });
+}
+
 module.exports = {
   list: asyncErrorBoundary(list),
   read: [asyncErrorBoundary(reservationExists), read],
@@ -239,4 +262,5 @@ module.exports = {
     validateStatus,
     asyncErrorBoundary(create),
   ],
+  update: [asyncErrorBoundary(reservationExists), validStatus, update],
 };

@@ -33,4 +33,28 @@ function create(data) {
     .then((rows) => rows[0]);
 }
 
-module.exports = { list, read, create };
+function update({ status }, { reservation_id }) {
+  if (status === "booked") {
+    return knex("reservations")
+      .where({ reservation_id })
+      .update({ status: "booked" })
+      .returning("*")
+      .then((rows) => rows[0]);
+  }
+  if (status === "seated") {
+    return knex("reservations")
+      .where({ reservation_id })
+      .update({ status: "seated" })
+      .returning("*")
+      .then((rows) => rows[0]);
+  }
+  if (status === "finished") {
+    return knex("reservations")
+      .where({ reservation_id })
+      .update({ status: "finished" })
+      .returning("*")
+      .then((rows) => rows[0]);
+  }
+}
+
+module.exports = { list, read, create, update };
