@@ -110,18 +110,24 @@ async function compareCapacity(req, res, next) {
 }
 
 function checkStatus(req, res, next) {
-  const { status } = res.locals.table;
-  if (status !== "free") {
+  if (res.locals.table.status !== "free") {
     return next({
       status: 400,
       message: "table is already occupied",
+    });
+  }
+  if (res.locals.reservation.status === "seated") {
+    return next({
+      status: 400,
+      message: "reservation is already seated",
     });
   }
   next();
 }
 
 async function update(req, res) {
-  const data = await service.update(res.locals.data, res.locals.table);
+  const data = await service.updateTable(res.locals.data, res.locals.table);
+  await service.updateReservation(res.locals.data);
   res.json({ data });
 }
 

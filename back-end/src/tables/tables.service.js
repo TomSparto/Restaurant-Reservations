@@ -30,14 +30,23 @@ function list() {
   return knex("tables").select("*").orderBy("table_name");
 }
 
-function update(data, table) {
+function updateTable(data, table) {
   const { reservation_id } = data;
   const { table_id } = table;
   return knex("tables")
     .where({ table_id })
-    .update({ reservation_id, status: "occupied" })
+    .update({
+      reservation_id,
+      status: "occupied",
+    })
     .returning("*")
     .then((rows) => rows[0]);
+}
+
+function updateReservation({ reservation_id }) {
+  return knex("reservations")
+    .where({ reservation_id })
+    .update({ status: "seated" });
 }
 
 function finishTable(table) {
@@ -49,4 +58,11 @@ function finishTable(table) {
     .then((rows) => rows[0]);
 }
 
-module.exports = { read, create, list, update, finishTable };
+module.exports = {
+  read,
+  create,
+  list,
+  updateTable,
+  finishTable,
+  updateReservation,
+};
