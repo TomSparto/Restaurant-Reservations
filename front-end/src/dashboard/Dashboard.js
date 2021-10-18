@@ -51,7 +51,7 @@ function Dashboard({ date }) {
       )}
       <hr></hr>
       <h1>Tables</h1>
-      <Tables tables={tables} />
+      <Tables tables={tables} date={date} />
       <ErrorAlert error={tablesError} />
     </main>
   );
