@@ -43,16 +43,15 @@ function SeatReservation() {
     const table_id = tables.find(
       (table) => table.table_name === tableName
     ).table_id;
-    const body = { data: { reservation_id } };
+    const tableBody = { data: { reservation_id } };
     try {
-      await updateTable(body, table_id);
+      await updateTable(tableBody, table_id);
       setFormData("");
       history.push("/dashboard");
     } catch (error) {
       setUpdateError(error);
     }
   };
-  console.log(formData);
 
   return (
     <div>

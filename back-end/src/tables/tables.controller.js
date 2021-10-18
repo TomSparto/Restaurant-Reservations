@@ -69,7 +69,7 @@ function validateCapacity(req, res, next) {
 
 async function create(req, res) {
   const data = await service.create(res.locals.data);
-  res.status(201).json({ data: res.locals.data });
+  res.status(201).json({ data });
 }
 
 async function list(req, res) {
@@ -111,7 +111,7 @@ async function compareCapacity(req, res, next) {
 
 function checkStatus(req, res, next) {
   const { status } = res.locals.table;
-  if (status !== "Free") {
+  if (status !== "free") {
     return next({
       status: 400,
       message: "table is already occupied",
@@ -123,6 +123,23 @@ function checkStatus(req, res, next) {
 async function update(req, res) {
   const data = await service.update(res.locals.data, res.locals.table);
   res.json({ data });
+}
+
+async function destroy(req, res) {
+  const { table } = res.locals;
+  const data = await service.finishTable(table);
+  res.json({ data });
+}
+
+function validateDestroy(req, res, next) {
+  const { table } = res.locals;
+  if (table.status !== "occupied") {
+    return next({
+      status: 400,
+      message: "The table is not occupied",
+    });
+  }
+  next();
 }
 
 module.exports = {
@@ -140,5 +157,10 @@ module.exports = {
     asyncErrorBoundary(compareCapacity),
     checkStatus,
     asyncErrorBoundary(update),
+  ],
+  delete: [
+    asyncErrorBoundary(tableExists),
+    validateDestroy,
+    asyncErrorBoundary(destroy),
   ],
 };

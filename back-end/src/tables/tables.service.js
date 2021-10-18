@@ -6,10 +6,24 @@ function read(table_id) {
 
 function create(data) {
   const { table_name, capacity } = data;
-  return knex("tables").insert({
-    table_name,
-    capacity,
-  });
+  if (data.reservation_id) {
+    return knex("tables")
+      .insert({
+        table_name,
+        capacity,
+        reservation_id: data.reservation_id,
+        status: "occupied",
+      })
+      .returning("*")
+      .then((rows) => rows[0]);
+  }
+  return knex("tables")
+    .insert({
+      table_name,
+      capacity,
+    })
+    .returning("*")
+    .then((rows) => rows[0]);
 }
 
 function list() {
@@ -21,7 +35,18 @@ function update(data, table) {
   const { table_id } = table;
   return knex("tables")
     .where({ table_id })
-    .update({ reservation_id, status: "Occupied" });
+    .update({ reservation_id, status: "occupied" })
+    .returning("*")
+    .then((rows) => rows[0]);
 }
 
-module.exports = { read, create, list, update };
+function finishTable(table) {
+  const { table_id } = table;
+  return knex("tables")
+    .where({ table_id })
+    .update({ reservation_id: null, status: "free" })
+    .returning("*")
+    .then((rows) => rows[0]);
+}
+
+module.exports = { read, create, list, update, finishTable };
