@@ -22,7 +22,7 @@ function TableForm() {
     try {
       await createTable({ data: formData });
       setFormData({ ...initialFormState });
-      history.push("/dashboard");
+      history.goBack();
     } catch (error) {
       setCreateError(error);
     }
