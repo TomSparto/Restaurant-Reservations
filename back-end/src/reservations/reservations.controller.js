@@ -11,7 +11,7 @@ const VALID = [
 ];
 
 async function list(req, res) {
-  const data = await service.list(req.query.date);
+  const data = await service.list(req.query.date, req.query.mobile_number);
   res.json({ data });
 }
 
@@ -178,21 +178,6 @@ function isToday(reservation_date, today) {
   } else return false;
 }
 
-function validatePhone(req, res, next) {
-  const { mobile_number } = res.locals.data;
-  if (
-    !/^\d{3}\-\d{4}$/.test(mobile_number) &&
-    !/^\d{3}\-\d{3}\-\d{4}$/.test(mobile_number)
-  ) {
-    next({
-      status: 400,
-      message:
-        "mobile_number must has a pattern like '123-123-1234' or '123-1234'",
-    });
-  }
-  next();
-}
-
 function validatePeople(req, res, next) {
   const { people } = res.locals.data;
   if (typeof people !== "number") {
@@ -227,7 +212,7 @@ function validateStatus(req, res, next) {
 }
 
 function validStatus(req, res, next) {
-  const validStatuses = ["booked", "seated", "finished"];
+  const validStatuses = ["booked", "seated", "finished", "cancelled"];
   const { status } = req.body.data;
   if (!validStatuses.includes(status)) {
     return next({
@@ -241,11 +226,25 @@ function validStatus(req, res, next) {
       message: "A finished reservation cannot be updated",
     });
   }
+  if (
+    res.locals.reservation.status !== "booked" &&
+    req.body.data.status === "cancelled"
+  ) {
+    return next({
+      status: 400,
+      message: "Only a booked reservation can be cancelled",
+    });
+  }
   next();
 }
 
 async function update(req, res) {
   const data = await service.update(req.body.data, res.locals.reservation);
+  res.json({ data });
+}
+
+async function updateReservation(req, res) {
+  const data = await service.updateReservation(res.locals.data);
   res.json({ data });
 }
 
@@ -255,7 +254,6 @@ module.exports = {
   create: [
     validateData,
     validateProperties,
-    validatePhone,
     validateDate,
     validateTime,
     validatePeople,
@@ -263,4 +261,14 @@ module.exports = {
     asyncErrorBoundary(create),
   ],
   update: [asyncErrorBoundary(reservationExists), validStatus, update],
+  updateReservation: [
+    asyncErrorBoundary(reservationExists),
+    validateData,
+    validateProperties,
+    validateDate,
+    validateTime,
+    validatePeople,
+    validateStatus,
+    asyncErrorBoundary(updateReservation),
+  ],
 };

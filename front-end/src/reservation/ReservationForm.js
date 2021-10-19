@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { createReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 
-function ReservationForm() {
+function ReservationForm({ reservation }) {
   const history = useHistory();
 
   const [createError, setCreateError] = useState(null);
@@ -31,6 +31,27 @@ function ReservationForm() {
       setCreateError(error);
     }
   };
+  useEffect(fillForm, [reservation]);
+  function fillForm() {
+    if (reservation) {
+      const {
+        first_name,
+        last_name,
+        mobile_number,
+        reservation_date,
+        reservation_time,
+        people,
+      } = reservation;
+      setFormData({
+        first_name,
+        last_name,
+        mobile_number,
+        reservation_date,
+        reservation_time,
+        people,
+      });
+    }
+  }
 
   return (
     <div>

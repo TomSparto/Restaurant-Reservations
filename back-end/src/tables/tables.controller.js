@@ -127,13 +127,14 @@ function checkStatus(req, res, next) {
 
 async function update(req, res) {
   const data = await service.updateTable(res.locals.data, res.locals.table);
-  await service.updateReservation(res.locals.data);
+  await service.seatReservation(res.locals.data);
   res.json({ data });
 }
 
 async function destroy(req, res) {
   const { table } = res.locals;
   const data = await service.finishTable(table);
+  await service.finishReservation(res.locals.table);
   res.json({ data });
 }
 

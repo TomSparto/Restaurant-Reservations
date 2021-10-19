@@ -36,6 +36,11 @@ function Dashboard({ date }) {
     return () => abortController.abort();
   }
 
+  const allFinishedReservations = reservations.filter(
+    (reservation) =>
+      reservation.status === "finished" || reservation.status === "cancelled"
+  );
+
   return (
     <main>
       <h1>Reservations</h1>
@@ -44,6 +49,10 @@ function Dashboard({ date }) {
       </div>
       <Buttons date={date} />
       <ErrorAlert error={reservationsError} />
+      {allFinishedReservations.length === reservations.length &&
+        reservations.length > 0 && (
+          <h3 className="my-3">No reservations for this date.</h3>
+        )}
       {reservations.length > 0 ? (
         <Reservations reservations={reservations} />
       ) : (

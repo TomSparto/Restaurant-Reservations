@@ -1,10 +1,14 @@
 const knex = require("../db/connection");
 
-function list(date) {
-  return knex("reservations")
-    .select("*")
-    .where({ reservation_date: date })
-    .orderBy("reservation_time");
+function list(date, mobile_number) {
+  if (date) {
+    return knex("reservations")
+      .select("*")
+      .where({ reservation_date: date })
+      .orderBy("reservation_time");
+  } else {
+    return search(mobile_number);
+  }
 }
 
 function read(reservation_id) {
@@ -34,27 +38,43 @@ function create(data) {
 }
 
 function update({ status }, { reservation_id }) {
-  if (status === "booked") {
-    return knex("reservations")
-      .where({ reservation_id })
-      .update({ status: "booked" })
-      .returning("*")
-      .then((rows) => rows[0]);
-  }
-  if (status === "seated") {
-    return knex("reservations")
-      .where({ reservation_id })
-      .update({ status: "seated" })
-      .returning("*")
-      .then((rows) => rows[0]);
-  }
-  if (status === "finished") {
-    return knex("reservations")
-      .where({ reservation_id })
-      .update({ status: "finished" })
-      .returning("*")
-      .then((rows) => rows[0]);
-  }
+  return knex("reservations")
+    .where({ reservation_id })
+    .update({ status })
+    .returning("*")
+    .then((rows) => rows[0]);
+}
+function updateReservation(data) {
+  const {
+    reservation_id,
+    first_name,
+    last_name,
+    mobile_number,
+    reservation_date,
+    reservation_time,
+    people,
+  } = data;
+  return knex("reservations")
+    .where({ reservation_id })
+    .update({
+      first_name,
+      last_name,
+      mobile_number,
+      reservation_date,
+      reservation_time,
+      people,
+    })
+    .returning("*")
+    .then((rows) => rows[0]);
 }
 
-module.exports = { list, read, create, update };
+function search(mobile_number) {
+  return knex("reservations")
+    .whereRaw(
+      "translate(mobile_number, '() -', '') like ?",
+      `%${mobile_number.replace(/\D/g, "")}%`
+    )
+    .orderBy("reservation_date");
+}
+
+module.exports = { list, read, create, update, updateReservation };

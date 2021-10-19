@@ -43,7 +43,7 @@ function updateTable(data, table) {
     .then((rows) => rows[0]);
 }
 
-function updateReservation({ reservation_id }) {
+function seatReservation({ reservation_id }) {
   return knex("reservations")
     .where({ reservation_id })
     .update({ status: "seated" });
@@ -58,11 +58,18 @@ function finishTable(table) {
     .then((rows) => rows[0]);
 }
 
+function finishReservation({ reservation_id }) {
+  return knex("reservations")
+    .where({ reservation_id })
+    .update({ status: "finished" });
+}
+
 module.exports = {
   read,
   create,
   list,
   updateTable,
   finishTable,
-  updateReservation,
+  seatReservation,
+  finishReservation,
 };

@@ -2,7 +2,7 @@ import React from "react";
 import { finishTable } from "../utils/api";
 import { useHistory } from "react-router-dom";
 
-function Tables({ tables }) {
+function Tables({ tables, date }) {
   const history = useHistory();
   const handleFinish = async (table_id) => {
     if (

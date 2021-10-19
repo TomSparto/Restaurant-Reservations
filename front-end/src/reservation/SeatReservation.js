@@ -39,7 +39,7 @@ function SeatReservation() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const tableName = formData.split(" ").join("").split("-")[0];
+    const tableName = formData.split("-")[0].trim();
     const table_id = tables.find(
       (table) => table.table_name === tableName
     ).table_id;
@@ -47,7 +47,7 @@ function SeatReservation() {
     try {
       await updateTable(tableBody, table_id);
       setFormData("");
-      history.push("/dashboard");
+      history.goBack();
     } catch (error) {
       setUpdateError(error);
     }
