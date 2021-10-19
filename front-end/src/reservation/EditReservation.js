@@ -19,7 +19,9 @@ function EditReservation() {
   }
   return (
     <div>
-      <h1>Edit Existing Reservation</h1>
+      <h1 className="d-flex justify-content-center my-3">
+        Edit Existing Reservation
+      </h1>
       <ErrorAlert error={readError} />
       <hr></hr>
       <ReservationForm reservation={reservation} />
