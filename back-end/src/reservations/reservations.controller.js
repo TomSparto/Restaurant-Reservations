@@ -74,8 +74,7 @@ function validateDate(req, res, next) {
   if (dayOfWeek === 1) {
     return next({
       status: 400,
-      message:
-        "reservation_date cannot fall on a tuesday because we are closed",
+      message: "reservation_date cannot be tuesday because we are closed",
     });
   }
   if (!/^\d{4}\-\d{2}\-\d{2}$/.test(reservation_date)) {
