@@ -50,7 +50,7 @@ function validateProperties(req, res, next) {
   const { data } = res.locals;
   VALID.forEach((property) => {
     if (!data[property] || data[property] === "") {
-      next({
+      return next({
         status: 400,
         message: `The '${property}' property is missing or empty`,
       });
@@ -66,20 +66,20 @@ function validateDate(req, res, next) {
   const dayOfWeek = reservationDate.getDay();
 
   if (!isfutureDate(reservation_date)) {
-    next({
+    return next({
       status: 400,
       message: "reservation_date must be in the future",
     });
   }
   if (dayOfWeek === 1) {
-    next({
+    return next({
       status: 400,
       message:
         "reservation_date cannot fall on a tuesday because we are closed",
     });
   }
   if (!/^\d{4}\-\d{2}\-\d{2}$/.test(reservation_date)) {
-    next({
+    return next({
       status: 400,
       message: "reservation_date needs to look like 'YYYY-MM-DD'",
     });
