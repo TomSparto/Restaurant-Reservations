@@ -21,13 +21,13 @@
 
 ## New Reservation `/reservations/new`
 
-![New Reservation Screenshot]()
+![New Reservation Screenshot](https://github.com/TomSparto/Restaurant-Reservations/blob/main/screenshots/newReservation.PNG?raw=true)
 
 > Allows a user to create a new Reservation.
 
 ## New Table `/tables/new`
 
-![New Table Screenshot]()
+![New Table Screenshot](https://github.com/TomSparto/Restaurant-Reservations/blob/main/screenshots/newTable.PNG?raw=true)
 
 > Allows a user to create a new Table.
 
@@ -37,15 +37,15 @@
 
 > Dashboard displays all of the restaurant tables, as well as all the reservations scheduled for the current date defined in the query. If no date is defined, the date will default to today's date.
 >
-> The user can traverse forward and backward one date at a time, as well instantly travel to today's date.
+> The user can traverse forward and backward one date at a time, as well as instantly travel to today's date.
 >
-> From here, the user can seat a booked reservation, edit a booked reservation, cancel a booked reservation, or finish a occupied table.
+> From here, the user can seat a booked reservation, edit a booked reservation, cancel a booked reservation, or finish an occupied table.
 >
-> NOTE: Reservations that have been finished will not show up on the dashboard.
+> NOTE: Reservations that have been finished or cancelled will not show up on the dashboard.
 
 ## Seat Table with a reservation `/reservations/6/seat`
 
-![Seat Table Screenshot]()
+![Seat Table Screenshot](https://github.com/TomSparto/Restaurant-Reservations/blob/main/screenshots/seatReservation.PNG?raw=true)
 
 > Clicking the Seat button next to a reservation on the Dashboard takes the user to that reservation's Seat Page.
 >
@@ -55,7 +55,7 @@
 
 ## Delete/Finish/Unseat a reservation from a table `No Route, the button is on each table in the dashboard`
 
-![Delete/Finish/Unseat Table Screenshot]()
+![Delete/Finish/Unseat Table Screenshot](https://github.com/TomSparto/Restaurant-Reservations/blob/main/screenshots/finishTable.PNG?raw=true)
 
 > Clicking on the Finish button displays a confirmation window.
 >
@@ -65,19 +65,15 @@
 
 ## Search for Reservations `/search`
 
-![Search Screenshot]()
+![Search Screenshot](https://github.com/TomSparto/Restaurant-Reservations/blob/main/screenshots/search.PNG?raw=true)
 
-> On the search page, a user can search for any reservation using a wide selection of possible search options. The default setting just has the `Phone Number` option selected. The user can enable or disable a search option by clicking on it.
+> On the search page, a user can search for any reservation using the `Phone Number`.
 >
-> If there is at least one search options enabled, the top search bar becomes a required field.
->
-> If the find button is clicked with no search options selected, it will show all reservations ordered by their id.
->
-> NOTE: These searches will work for partial matches, and they are not case sensitive.
+> NOTE: The search will work for partial matches.
 
 ## Edit a Booked Reservation `reservations/7/edit`
 
-![Edit Reservation Screenshot]()
+![Edit Reservation Screenshot](https://github.com/TomSparto/Restaurant-Reservations/blob/main/screenshots/editReservation.PNG?raw=true)
 
 > Allows a user to edit an existing reservation.
 >
@@ -100,24 +96,9 @@
 - Ordered by scheduled time.
 - If any of the queries are a `date` query, this route will override the next route.
 
-### `GET /reservations?validSearchQuery`
+### `GET /reservations?mobile_number`
 
-- Returns a list of all reservations that contain a partial match to each of the provided search queries.
-- Ordered by scheduled date starting from the most future date.
-- Any number of queries can be passed in like `/reservations?query1=one&query2=two&query3=three` etc.
-- All queries are treated as strings, and all queries are case insensitive.
-- If any query is invalid, the entire request will be considered invalid.
-- Currently supports the following valid search params:
-  - `reservation_id`
-  - `created_at`
-  - `updated_at`
-  - `first_name`
-  - `last_name`
-  - `mobile_number`
-  - `reservation_date`
-  - `reservation_time`
-  - `people`
-  - `status`
+- Returns a list of all reservations that contain a partial match to the `mobile_number`.
 
 ### `POST /reservations`
 
@@ -187,11 +168,6 @@
 
 - Returns a single table object given a valid `table_id` param.
 - Request is invalid if the provided table_id does not correspond to an existing table.
-
-### `GET /tables/:table_id/seat`
-
-- This route is identical to `GET /tables/:table_id`
-- Primarily included as a development/testing convenience.
 
 ### `PUT /tables/:table_id/seat`
 
