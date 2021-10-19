@@ -115,20 +115,20 @@ function validateTime(req, res, next) {
   if (isToday(reservation_date, today)) {
     console.log("the reservation is for today");
     if (!checkHours(reservation_time, currentTime)) {
-      next({
+      return next({
         status: 400,
         message: "reservation_time needs to be in the future",
       });
     }
   }
   if (!checkHours(reservation_time)) {
-    next({
+    return next({
       status: 400,
       message: "reservation_time must be between 10:30 and 21:30",
     });
   }
   if (!/^\d{2}\:\d{2}/.test(reservation_time)) {
-    next({
+    return next({
       status: 400,
       message: "reservation_time needs to look like 'HH:MM'",
     });
