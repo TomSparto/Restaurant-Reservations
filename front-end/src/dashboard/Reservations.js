@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { updateReservation } from "../utils/api";
+import { updateReservationStatus } from "../utils/api";
 import { useHistory } from "react-router-dom";
 
 function Reservations({ reservations }) {
@@ -12,7 +12,7 @@ function Reservations({ reservations }) {
         "Do you want to cancel this reservation? This cannot be undone."
       )
     ) {
-      await updateReservation(body, reservation_id);
+      await updateReservationStatus(body, reservation_id);
       history.go(0);
     }
   };

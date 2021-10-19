@@ -123,7 +123,7 @@ export async function updateTable(body, table_id, signal) {
   return await fetchJson(url, options, {});
 }
 
-export async function updateReservation(body, reservation_id, signal) {
+export async function updateReservationStatus(body, reservation_id, signal) {
   const url = `${API_BASE_URL}/reservations/${reservation_id}/status`;
   const options = {
     method: "PUT",
@@ -139,6 +139,17 @@ export async function finishTable(table_id, signal) {
   const options = {
     method: "DELETE",
     headers,
+    signal,
+  };
+  return await fetchJson(url, options, {});
+}
+
+export async function updateReservation(reservation, reservation_id, signal) {
+  const url = `${API_BASE_URL}/reservations/${reservation_id}`;
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ data: reservation }),
     signal,
   };
   return await fetchJson(url, options, {});

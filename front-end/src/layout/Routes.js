@@ -39,7 +39,7 @@ function Routes() {
         <NewTable />
       </Route>
       <Route exact={true} path="/reservations/:reservation_id/seat">
-        <SeatReservation />
+        <SeatReservation date={date} />
       </Route>
       <Route exact={true} path="/search">
         <Search />

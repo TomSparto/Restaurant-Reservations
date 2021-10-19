@@ -3,7 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { readReservation, listTables, updateTable } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 
-function SeatReservation() {
+function SeatReservation({ date }) {
   const history = useHistory();
   const { reservation_id } = useParams();
   const [readError, setReadError] = useState(null);
@@ -47,7 +47,7 @@ function SeatReservation() {
     try {
       await updateTable(tableBody, table_id);
       setFormData("");
-      history.goBack();
+      history.push(`/dashboard?date=${date}`);
     } catch (error) {
       setUpdateError(error);
     }

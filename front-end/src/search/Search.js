@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { listReservations } from "../utils/api";
+import { Link } from "react-router-dom";
 
 function Search() {
   const history = useHistory();
@@ -72,6 +73,12 @@ function Search() {
                   >
                     <b>Status:</b> {status}
                   </p>
+                  <Link
+                    to={`/reservations/${reservation_id}/edit`}
+                    className="btn btn-secondary mr-3"
+                  >
+                    Edit
+                  </Link>
                 </div>
               </div>
             );

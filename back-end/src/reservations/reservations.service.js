@@ -5,6 +5,7 @@ function list(date, mobile_number) {
     return knex("reservations")
       .select("*")
       .where({ reservation_date: date })
+      .andWhere("status", "<>", "finished")
       .orderBy("reservation_time");
   } else {
     return search(mobile_number);
@@ -44,9 +45,8 @@ function update({ status }, { reservation_id }) {
     .returning("*")
     .then((rows) => rows[0]);
 }
-function updateReservation(data) {
+function updateReservation(data, reservation_id) {
   const {
-    reservation_id,
     first_name,
     last_name,
     mobile_number,

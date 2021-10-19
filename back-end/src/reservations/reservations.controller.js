@@ -243,8 +243,22 @@ async function update(req, res) {
   res.json({ data });
 }
 
+function updateStatusCheck(req, res, next) {
+  const { status } = res.locals.reservation;
+  if (status !== "booked") {
+    return next({
+      status: 400,
+      message: "Only a booked reservation can be edited.",
+    });
+  }
+  next();
+}
+
 async function updateReservation(req, res) {
-  const data = await service.updateReservation(res.locals.data);
+  const data = await service.updateReservation(
+    req.body.data,
+    res.locals.reservation.reservation_id
+  );
   res.json({ data });
 }
 
@@ -268,7 +282,7 @@ module.exports = {
     validateDate,
     validateTime,
     validatePeople,
-    validateStatus,
+    updateStatusCheck,
     asyncErrorBoundary(updateReservation),
   ],
 };

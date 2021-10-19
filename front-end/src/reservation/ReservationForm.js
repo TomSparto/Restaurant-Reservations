@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { createReservation } from "../utils/api";
+import { createReservation, updateReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 
 function ReservationForm({ reservation }) {
@@ -31,9 +31,21 @@ function ReservationForm({ reservation }) {
       setCreateError(error);
     }
   };
+
+  const handleUpdate = async (event) => {
+    event.preventDefault();
+    formData.people = parseInt(formData.people);
+    try {
+      await updateReservation(formData, reservation.reservation_id);
+      setFormData({ ...initialFormState });
+      history.push(`/dashboard?date=${formData.reservation_date}`);
+    } catch (error) {
+      setCreateError(error);
+    }
+  };
   useEffect(fillForm, [reservation]);
   function fillForm() {
-    if (reservation) {
+    if (reservation && Object.keys(reservation).length > 0) {
       const {
         first_name,
         last_name,
@@ -52,6 +64,7 @@ function ReservationForm({ reservation }) {
       });
     }
   }
+  console.log(formData);
 
   return (
     <div>
@@ -150,13 +163,23 @@ function ReservationForm({ reservation }) {
       </form>
       <ErrorAlert error={createError} />
       <div className="my-3">
-        <button
-          type="submit"
-          className="btn btn-primary mr-3"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
+        {reservation ? (
+          <button
+            type="submit"
+            className="btn btn-primary mr-3"
+            onClick={handleUpdate}
+          >
+            Submit
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="btn btn-primary mr-3"
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
+        )}
         <button
           type="button"
           className="btn btn-secondary"
