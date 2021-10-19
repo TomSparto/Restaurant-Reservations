@@ -43,23 +43,27 @@ function Dashboard({ date }) {
 
   return (
     <main>
-      <h1>Reservations</h1>
-      <div className="d-md-flex mb-3">
+      <h1 className="d-flex justify-content-center">Reservations</h1>
+      <div className="d-flex justify-content-center mb-3">
         <h4 className="mb-0">Date: {date}</h4>
       </div>
       <Buttons date={date} />
       <ErrorAlert error={reservationsError} />
       {allFinishedReservations.length === reservations.length &&
         reservations.length > 0 && (
-          <h3 className="my-3">No reservations for this date.</h3>
+          <h3 className="my-3 d-flex justify-content-center">
+            No reservations for this date.
+          </h3>
         )}
       {reservations.length > 0 ? (
         <Reservations reservations={reservations} />
       ) : (
-        <h3 className="my-3">No reservations for this date.</h3>
+        <h3 className="my-3 d-flex justify-content-center">
+          No reservations for this date.
+        </h3>
       )}
       <hr></hr>
-      <h1>Tables</h1>
+      <h1 className="d-flex justify-content-center">Tables</h1>
       <Tables tables={tables} date={date} />
       <ErrorAlert error={tablesError} />
     </main>

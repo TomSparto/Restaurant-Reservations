@@ -4,10 +4,10 @@ import { previous, next, today } from "../utils/date-time";
 
 function Buttons({ date }) {
   return (
-    <div>
+    <div className="d-flex justify-content-center">
       <Link to={`/dashboard?date=${previous(date)}`}>
         <button type="button" className="btn btn-secondary mr-3">
-          Previous Day
+          Previous
         </button>
       </Link>
       <Link to={`/dashboard?date=${today()}`}>
@@ -17,7 +17,7 @@ function Buttons({ date }) {
       </Link>
       <Link to={`/dashboard?date=${next(date)}`}>
         <button type="button" className="btn btn-secondary mx-3">
-          Next Day
+          Next
         </button>
       </Link>
     </div>

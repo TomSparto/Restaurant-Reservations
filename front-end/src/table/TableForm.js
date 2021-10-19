@@ -31,49 +31,47 @@ function TableForm() {
   return (
     <div>
       <form>
-        <div className="row my-3">
-          <div className="col">
-            <label htmlFor="table_name">
-              <b>Table Name:</b>
-            </label>
-            <input
-              name="table_name"
-              id="table_name"
-              type="text"
-              className="form-control"
-              onChange={handleChange}
-              value={formData.table_name}
-              required
-            />
-          </div>
-          <div className="col">
-            <label htmlFor="capacity">
-              <b>Capacity:</b>
-            </label>
-            <input
-              name="capacity"
-              id="capacity"
-              type="number"
-              className="form-control"
-              onChange={handleChange}
-              value={formData.capacity}
-              required
-            />
-          </div>
+        <div className="form-group">
+          <label htmlFor="table_name">
+            <b>Table Name:</b>
+          </label>
+          <input
+            name="table_name"
+            id="table_name"
+            type="text"
+            className="form-control"
+            onChange={handleChange}
+            value={formData.table_name}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="capacity">
+            <b>Capacity:</b>
+          </label>
+          <input
+            name="capacity"
+            id="capacity"
+            type="number"
+            className="form-control"
+            onChange={handleChange}
+            value={formData.capacity}
+            required
+          />
         </div>
       </form>
       <ErrorAlert error={createError} />
-      <div className="my-3">
+      <div className="my-5">
         <button
           type="submit"
-          className="btn btn-primary mr-3"
+          className="btn btn-primary btn-lg btn-block my-3"
           onClick={handleSubmit}
         >
           Submit
         </button>
         <button
           type="button"
-          className="btn btn-secondary"
+          className="btn btn-secondary btn-lg btn-block"
           onClick={() => history.goBack()}
         >
           Cancel

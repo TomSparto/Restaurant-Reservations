@@ -64,109 +64,101 @@ function ReservationForm({ reservation }) {
       });
     }
   }
-  console.log(formData);
 
   return (
     <div>
       <form>
-        <div className="row my-3">
-          <div className="col">
-            <label htmlFor="first_name">
-              <b>First Name:</b>
-            </label>
-            <input
-              name="first_name"
-              id="first_name"
-              type="text"
-              className="form-control"
-              onChange={handleChange}
-              value={formData.first_name}
-              required
-            />
-          </div>
-          <div className="col">
-            <label htmlFor="last_name">
-              <b>Last Name:</b>
-            </label>
-            <input
-              name="last_name"
-              id="last_name"
-              type="text"
-              className="form-control"
-              onChange={handleChange}
-              value={formData.last_name}
-              required
-            />
-          </div>
-          <div className="col">
-            <label htmlFor="mobile_number">
-              <b>Mobile Number:</b>
-            </label>
-            <small className="float-right">
-              Format: 123-456-7890 or 123-4567
-            </small>
-            <input
-              name="mobile_number"
-              id="mobile_number"
-              type="tel"
-              className="form-control"
-              onChange={handleChange}
-              value={formData.mobile_number}
-              required
-            />
-          </div>
+        <div className="form-group">
+          <label htmlFor="first_name">
+            <b>First Name:</b>
+          </label>
+          <input
+            name="first_name"
+            id="first_name"
+            type="text"
+            className="form-control"
+            onChange={handleChange}
+            value={formData.first_name}
+            required
+          />
         </div>
-        <div className="row">
-          <div className="col">
-            <label htmlFor="reservation_date">
-              <b>Reservation Date:</b>
-            </label>
-            <input
-              name="reservation_date"
-              id="reservation_date"
-              type="date"
-              className="form-control"
-              onChange={handleChange}
-              value={formData.reservation_date}
-              required
-            />
-          </div>
-          <div className="col">
-            <label htmlFor="reservation_time">
-              <b>Reservation Time:</b>
-            </label>
-            <input
-              name="reservation_time"
-              id="reservation_time"
-              type="time"
-              className="form-control"
-              onChange={handleChange}
-              value={formData.reservation_time}
-              required
-            />
-          </div>
-          <div className="col">
-            <label htmlFor="people">
-              <b>Party of How Many:</b>
-            </label>
-            <input
-              name="people"
-              id="people"
-              type="number"
-              className="form-control"
-              onChange={handleChange}
-              value={formData.people}
-              required
-            />
-          </div>
+        <div className="form-group">
+          <label htmlFor="last_name">
+            <b>Last Name:</b>
+          </label>
+          <input
+            name="last_name"
+            id="last_name"
+            type="text"
+            className="form-control"
+            onChange={handleChange}
+            value={formData.last_name}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="mobile_number">
+            <b>Mobile Number:</b>
+          </label>
+          <input
+            name="mobile_number"
+            id="mobile_number"
+            type="tel"
+            className="form-control"
+            onChange={handleChange}
+            value={formData.mobile_number}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="reservation_date">
+            <b>Reservation Date:</b>
+          </label>
+          <input
+            name="reservation_date"
+            id="reservation_date"
+            type="date"
+            className="form-control"
+            onChange={handleChange}
+            value={formData.reservation_date}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="reservation_time">
+            <b>Reservation Time:</b>
+          </label>
+          <input
+            name="reservation_time"
+            id="reservation_time"
+            type="time"
+            className="form-control"
+            onChange={handleChange}
+            value={formData.reservation_time}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="people">
+            <b>Party of How Many:</b>
+          </label>
+          <input
+            name="people"
+            id="people"
+            type="number"
+            className="form-control"
+            onChange={handleChange}
+            value={formData.people}
+            required
+          />
         </div>
       </form>
       <ErrorAlert error={createError} />
-      <div className="my-3">
+      <div className="my-5">
         {reservation ? (
           <button
             type="submit"
-            className="btn btn-primary mr-3"
+            className="btn btn-primary btn-block btn-lg"
             onClick={handleUpdate}
           >
             Submit
@@ -174,7 +166,7 @@ function ReservationForm({ reservation }) {
         ) : (
           <button
             type="submit"
-            className="btn btn-primary mr-3"
+            className="btn btn-primary btn-block btn-lg"
             onClick={handleSubmit}
           >
             Submit
@@ -182,7 +174,7 @@ function ReservationForm({ reservation }) {
         )}
         <button
           type="button"
-          className="btn btn-secondary"
+          className="btn btn-secondary btn-block btn-lg my-3"
           onClick={() => history.goBack()}
         >
           Cancel

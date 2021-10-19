@@ -55,44 +55,42 @@ function SeatReservation({ date }) {
 
   return (
     <div>
-      <h1>Select a table to seat this reservation</h1>
-      <h3 className="my-3">
+      <h1 className="d-flex justify-content-center mt-3">Select a table</h1>
+      <h3 className="d-flex justify-content-center mb-5">
         {first_name} {last_name} party of {people}
       </h3>
       <ErrorAlert error={readError} />
       <ErrorAlert error={tableError} />
-      <form className="my-5">
-        <label htmlFor="table_id">
-          <b>Table:</b>
-        </label>
-        <select
-          name="table_id"
-          id="table_id"
-          className="mx-3"
-          onChange={handleSelect}
-          value={formData}
-        >
-          <option value="">Select a table</option>
-          {tables.map((table) => {
-            const { table_id, table_name, capacity } = table;
-            return (
-              <option
-                key={table_id}
-                name={table_id}
-                value={`${table_name} - ${capacity}`}
-              >
-                {table_name} - {capacity}
-              </option>
-            );
-          })}
-        </select>
-        <small>table - capacity</small>
+      <form className="mb-5">
+        <div className="form-group">
+          <select
+            name="table_id"
+            id="table_id"
+            className="custom-select"
+            onChange={handleSelect}
+            value={formData}
+          >
+            <option value="">Select a table</option>
+            {tables.map((table) => {
+              const { table_id, table_name, capacity } = table;
+              return (
+                <option
+                  key={table_id}
+                  name={table_id}
+                  value={`${table_name} - ${capacity}`}
+                >
+                  {table_name} - {capacity}
+                </option>
+              );
+            })}
+          </select>
+        </div>
       </form>
       <ErrorAlert error={updateError} />
-      <div className="my-3">
+      <div>
         <button
           type="submit"
-          className="btn btn-primary mr-3"
+          className="btn btn-primary btn-lg btn-block my-3"
           onClick={handleSubmit}
           disabled={formData === "" ? true : false}
         >
@@ -100,7 +98,7 @@ function SeatReservation({ date }) {
         </button>
         <button
           type="button"
-          className="btn btn-secondary"
+          className="btn btn-secondary btn-lg btn-block"
           onClick={() => history.goBack()}
         >
           Cancel

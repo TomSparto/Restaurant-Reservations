@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { listReservations } from "../utils/api";
 import { Link } from "react-router-dom";
+import { updateReservationStatus } from "../utils/api";
 
 function Search() {
   const history = useHistory();
@@ -15,11 +16,22 @@ function Search() {
     const cleanNumber = mobile_number.split("-").join("");
     listReservations({ mobile_number: cleanNumber }).then(setReservations);
   };
+  const handleCancel = async (reservation_id) => {
+    const body = { data: { status: "cancelled" } };
+    if (
+      window.confirm(
+        "Do you want to cancel this reservation? This cannot be undone."
+      )
+    ) {
+      await updateReservationStatus(body, reservation_id);
+      history.go(0);
+    }
+  };
 
   return (
     <div>
-      <h1>Search for a phone number</h1>
-      <form className="mt-5">
+      <h1 className="d-flex justify-content-center my-3">Search</h1>
+      <form className="mt-3">
         <div className="form-group">
           <label htmlFor="mobile_number">
             <b>Phone Number:</b>
@@ -35,7 +47,11 @@ function Search() {
           />
         </div>
       </form>
-      <button type="submit" className="btn btn-primary" onClick={handleFind}>
+      <button
+        type="submit"
+        className="btn btn-primary btn-lg btn-block"
+        onClick={handleFind}
+      >
         Find
       </button>
       <hr></hr>
@@ -79,6 +95,14 @@ function Search() {
                   >
                     Edit
                   </Link>
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    data-reservation-id-cancel={reservation_id}
+                    onClick={() => handleCancel(reservation_id)}
+                  >
+                    Cancel
+                  </button>
                 </div>
               </div>
             );
