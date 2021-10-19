@@ -61,8 +61,8 @@ function validateProperties(req, res, next) {
 }
 
 function validateDate(req, res, next) {
-  const { reservation_date } = res.locals.data;
-  const reservationDate = new Date(reservation_date);
+  const { reservation_date, reservation_time } = res.locals.data;
+  const reservationDate = new Date(`${reservation_date}T${reservation_time}`);
   const dayOfWeek = reservationDate.getDay();
 
   if (!isfutureDate(reservation_date)) {
@@ -71,11 +71,10 @@ function validateDate(req, res, next) {
       message: "reservation_date must be in the future",
     });
   }
-  if (dayOfWeek === 1) {
+  if (dayOfWeek === 2) {
     return next({
       status: 400,
-      message:
-        "reservation_date cannot fall on a tuesday because we are closed",
+      message: "reservation_date cannot be tuesday because we are closed",
     });
   }
   if (!/^\d{4}\-\d{2}\-\d{2}$/.test(reservation_date)) {
@@ -115,20 +114,20 @@ function validateTime(req, res, next) {
   if (isToday(reservation_date, today)) {
     console.log("the reservation is for today");
     if (!checkHours(reservation_time, currentTime)) {
-      next({
+      return next({
         status: 400,
         message: "reservation_time needs to be in the future",
       });
     }
   }
   if (!checkHours(reservation_time)) {
-    next({
+    return next({
       status: 400,
       message: "reservation_time must be between 10:30 and 21:30",
     });
   }
   if (!/^\d{2}\:\d{2}/.test(reservation_time)) {
-    next({
+    return next({
       status: 400,
       message: "reservation_time needs to look like 'HH:MM'",
     });
