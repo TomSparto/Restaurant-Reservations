@@ -1,4 +1,4 @@
-# [Restaurant Reservation Fullstack Web App](https://restaurant-reserve-127-client.herokuapp.com/)
+# [Restaurant Reservation Fullstack Web App]()
 
 > Full-Stack Restaurant Reservation Web App built from the ground up by Trevor Glascock in Node and React. This app is to be used by restaurant staff to create and handle restaurant reservations.
 
@@ -13,27 +13,27 @@
 
 # Live Deployment Links
 
-- ### [React App Client-Side Deployment](https://restaurant-reserve-127-client.herokuapp.com/)
+- ### [React App Client-Side Deployment]()
 
-- ### [Express API Back-End Deployment](https://restaurant-reserve-127-backend.herokuapp.com/)
+- ### [Express API Back-End Deployment]()
 
 # General Usage and Screenshots
 
 ## New Reservation `/reservations/new`
 
-![New Reservation Screenshot](https://raw.githubusercontent.com/TrevorGlascock/Restaurant_Reservation/main/screenshots/new-reservation.png)
+![New Reservation Screenshot]()
 
 > Allows a user to create a new Reservation.
 
 ## New Table `/tables/new`
 
-![New Table Screenshot](https://raw.githubusercontent.com/TrevorGlascock/Restaurant_Reservation/main/screenshots/new-table.png)
+![New Table Screenshot]()
 
 > Allows a user to create a new Table.
 
 ## Dashboard `/dashboard?date=2021-10-20`
 
-![Dashboard Screenshot](https://raw.githubusercontent.com/TrevorGlascock/Restaurant_Reservation/main/screenshots/dashboard.png)
+![Dashboard Screenshot](https://github.com/TomSparto/Restaurant-Reservations/blob/main/screenshots/dashboard.PNG?raw=true)
 
 > Dashboard displays all of the restaurant tables, as well as all the reservations scheduled for the current date defined in the query. If no date is defined, the date will default to today's date.
 >
@@ -45,7 +45,7 @@
 
 ## Seat Table with a reservation `/reservations/6/seat`
 
-![Seat Table Screenshot](https://raw.githubusercontent.com/TrevorGlascock/Restaurant_Reservation/main/screenshots/seat-table.png)
+![Seat Table Screenshot]()
 
 > Clicking the Seat button next to a reservation on the Dashboard takes the user to that reservation's Seat Page.
 >
@@ -55,7 +55,7 @@
 
 ## Delete/Finish/Unseat a reservation from a table `No Route, the button is on each table in the dashboard`
 
-![Delete/Finish/Unseat Table Screenshot](https://raw.githubusercontent.com/TrevorGlascock/Restaurant_Reservation/main/screenshots/unseat-table.png)
+![Delete/Finish/Unseat Table Screenshot]()
 
 > Clicking on the Finish button displays a confirmation window.
 >
@@ -65,7 +65,7 @@
 
 ## Search for Reservations `/search`
 
-![Search Screenshot](https://raw.githubusercontent.com/TrevorGlascock/Restaurant_Reservation/main/screenshots/search.png)
+![Search Screenshot]()
 
 > On the search page, a user can search for any reservation using a wide selection of possible search options. The default setting just has the `Phone Number` option selected. The user can enable or disable a search option by clicking on it.
 >
@@ -77,7 +77,7 @@
 
 ## Edit a Booked Reservation `reservations/7/edit`
 
-![Edit Reservation Screenshot](https://raw.githubusercontent.com/TrevorGlascock/Restaurant_Reservation/main/screenshots/edit-reservation.png)
+![Edit Reservation Screenshot]()
 
 > Allows a user to edit an existing reservation.
 >
