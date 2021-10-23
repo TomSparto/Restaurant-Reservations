@@ -1,6 +1,6 @@
 # [Restaurant Reservation Fullstack Web App](https://restaurant-reserve-128-client.herokuapp.com/dashboard)
 
-> Full-Stack Restaurant Reservation Web App built from the ground up by Trevor Glascock in Node and React. This app is to be used by restaurant staff to create and handle restaurant reservations.
+> Full-Stack Restaurant Reservation Web App built from the ground up by Tom Sparto in Node and React. This app is to be used by restaurant staff to create and handle restaurant reservations.
 
 ### Table of Contents
 
